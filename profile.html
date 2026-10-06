@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="profile.css">
+    <title>Suomi · matkakartta</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="" />
+
+
+<body>
+<!-- Header section -->
+<header>
+    <button class="hamburger" id="hamburger-icon">
+        <span onclick="openNavbar()"> ☰</span>
+    </button>
+    <div> <img src="kuvat/logo.jpg.jpg" alt="Welcome"></div>
+    <nav id="nav-menu">
+        <ul>
+            <li><a href="pääsivut.html">Main page</a></li>
+            <li><a href="kalalauta.html">Kalalauta</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="diary.html">Diary</a></li>
+        </ul>
+    </nav>
+    <button class="reachUs-button">Call us</button>
+</header>
+
+<!-- banner section  -->
+<section class="banner">
+    <img src="kuvat/profile.jpg" alt="profile banner" style="max-width:100%;">
+    <h1>𓆝 𓆟 𓆞 𓆝 𓆟𓆝 𓆟 𓆞 𓆝 𓆟𓆝 𓆟 𓆞 𓆝 𓆟</h1>
+
+    <!-- embedded google map (original) -->
+    <div style="display: grid; justify-content: center; padding: 0 1rem;">
+        <h2 style="text-align: center;">Recent catch from:</h2>
+        <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7360.795140046689!2d23.67876139148439!3d62.53390087114643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4686174b67586809%3A0xed962d68839851e5!2s63300%20Polvi!5e0!3m2!1sfi!2sfi!4v1783709427960!5m2!1sfi!2sfi"
+                width="600" height="450" style="border:0; max-width:100%;" allowfullscreen="" loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+    </div>
+
+    <p style="text-align:center; font-size:1.2rem;">Good job!!!!</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:0.8rem; justify-content:center;">
+        <img src="kuvat/herrasmieskalassa.jpg" alt="herrasmies" style="max-width:200px; border-radius:1rem;">
+        <img src="kuvat/mishacollins.jpg" alt="misha" style="max-width:200px; border-radius:1rem;">
+        <img src="kuvat/herrasmieskalassa.jpg" alt="herrasmies2" style="max-width:200px; border-radius:1rem;">
+    </div>
+</section>
+
+
+<!-- Company contact info -->
+<section class="contact-info">
+    <h2>Contact Information</h2>
+    <address>
+        Suomu<br>
+        Metsäsuomitie 67,<br>
+        04957 Mäntäänsuoli<br>
+        Phone: <a href="tel:0300 8907 789">0300 8907 789</a><br>
+        Email: <a href="mailto:suomu@pp.inet.fi">suomu@pp.inet.fi</a>
+    </address>
+</section>
+
+<!-- Footer section -->
+<footer>
+    <p>&copy; 2026 Suomu. All rights reserved.</p>
+</footer>
+
+
+
+</body>
+
+</html>

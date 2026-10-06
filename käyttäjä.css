@@ -1,0 +1,365 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5fffa;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #78866b;
+    color: #f5fffa;
+    height: 4rem;
+}
+
+.logo {
+    font-size: 2rem;
+}
+
+nav {
+    width: 50rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul li a {
+    font-size: 1.2rem;
+    padding: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li a:hover {
+    background-color: #a9ba9d ;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.reachUs-button {
+    padding: 1rem;
+    background-color: #a9ba9d ;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.reachUs-button:hover{
+    background-color: #a9ba9d ;
+}
+
+/* banner section styles */
+.banner {
+    text-align: center;
+    background-color: #f5fffa;
+    margin: 0 auto;
+}
+
+.banner img {
+    max-width: 100%;
+    height: auto;
+}
+/* Contact form styles */
+.contact-form {
+    padding: 40px 0;
+    margin: 0 10px;
+}
+
+.form-container {
+    max-width: 40%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+p1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display:block;
+    font-weight: bold;
+}
+.form-container input, textarea{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+.submit-button {
+    padding: 10px 20px;
+    background-color: #0dac30;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+/* Contact info styles */
+.contact-info {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #f0fff0 ;
+}
+
+.contact-info h2 {
+    margin-bottom: 20px;
+}
+
+/* Footer styles */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #333;
+    color: #f0fff0 ;
+}
+/* Hamburger styles */
+.hamburger {
+    display: none;
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media only screen and (max-width: 768px) {
+    .logo {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    #nav-menu {
+        position: absolute;
+        top: 4rem;
+        left: 0;
+        background-color: #333;
+        width: 100%;
+        display: none;
+    }
+
+    #nav-menu.active {
+        display: block;
+        flex-direction: row;
+        padding: 1rem;
+    }
+}
+
+/* ========== NEW ACCOUNT/LOGIN CARD STYLES (Suomu fishing theme) ========== */
+.account-card-wrapper {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.account-glass-card {
+    background: #fefaf5;
+    border-radius: 42px;
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+    border: 1px solid #cbd5ad;
+    overflow: hidden;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.account-tabs {
+    display: flex;
+    background: #e2dacf;
+    border-bottom: 3px solid #9ACBD0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem 0.5rem;
+    font-family: 'Papyrus', fantasy, cursive;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #2f4d2d;
+    letter-spacing: 1px;
+}
+
+.tab-btn.active {
+    background: #fefaf5;
+    color: #1f5e3a;
+    border-bottom: 4px solid #5d8c48;
+}
+
+.auth-panel {
+    display: none;
+    padding: 2rem 1.8rem;
+    background: #fefaf5;
+}
+
+.auth-panel.active-panel {
+    display: block;
+    animation: fadeSlide 0.25s ease-out;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-mini {
+    text-align: center;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #355e2a;
+}
+
+.input-group {
+    margin-bottom: 1.4rem;
+}
+
+.input-group label {
+    display: block;
+    font-family: 'Papyrus', fantasy, cursive;
+    font-weight: bold;
+    color: #2c4b2a;
+    margin-bottom: 0.45rem;
+    font-size: 0.9rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border-radius: 60px;
+    border: 1.5px solid #cfd8b0;
+    background: white;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.input-field:focus {
+    border-color: #7aa56e;
+    box-shadow: 0 0 0 3px rgba(90, 140, 70, 0.2);
+}
+
+.field-hint {
+    font-size: 0.7rem;
+    color: #6a7c5e;
+    margin-top: 0.25rem;
+    margin-left: 0.8rem;
+}
+
+.error-message {
+    color: #c7423f;
+    font-size: 0.7rem;
+    margin-top: 0.3rem;
+    margin-left: 0.8rem;
+    font-weight: bold;
+}
+
+.action-btn {
+    background: #5d8c48;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 0.85rem;
+    border-radius: 60px;
+    font-family: 'Papyrus', fantasy, cursive;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0.6rem;
+    transition: background 0.2s, transform 0.05s;
+}
+
+.action-btn:hover {
+    background: #2f6b3c;
+}
+
+.action-btn:active {
+    transform: scale(0.97);
+}
+
+.switch-helper {
+    text-align: center;
+    margin-top: 1.3rem;
+    font-size: 0.8rem;
+    color: #4a5e42;
+}
+
+.switch-link {
+    background: none;
+    border: none;
+    color: #2c6e2c;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.85rem;
+}
+
+.switch-link:hover {
+    color: #1f4a1f;
+}
+
+.demo-note {
+    background: #eef3e7;
+    border-radius: 28px;
+    padding: 0.65rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #3f5640;
+    margin-top: 1.2rem;
+    border: 1px solid #cde0bc;
+}
+
+/* responsive tweaks for account card */
+@media screen and (max-width: 768px) {
+    .account-glass-card {
+        border-radius: 28px;
+    }
+    .auth-panel {
+        padding: 1.5rem;
+    }
+    .tab-btn {
+        font-size: 1rem;
+    }
+}

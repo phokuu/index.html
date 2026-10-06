@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login/ sign up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="käyttäjä.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>&nbsp;&nbsp;&nbsp;<img src="https://media.tenor.com/iHSOTuB00QAAAAAj/gone-fishing-fishing.gif" style="width:48px;height:48px; border-radius: 0;">&nbsp; &nbsp;Suomu</h1>
+        <nav>
+            <ul>
+                <li><a href="pääsivut.html">Back to main page</a></li>                <li><a href="Käyttäjä.html">Account</a></li>
+                <li><a href="whoarewe.html">Our Story</a></li>
+                <li><a href="apusivu.html">Help</a></li>
+                <li><a href="merch.html">Merch</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="account-section-full" class="account-card-wrapper">
+            <div class="account-glass-card">
+                <div class="account-tabs">
+                    <button class="tab-btn active" id="loginTabBtn">Sign In</button>
+                    <button class="tab-btn" id="signupTabBtn">Create Account</button>
+                </div>
+
+                <!-- LOGIN PANEL -->
+                <div id="loginPanel" class="auth-panel active-panel">
+                    <div class="logo-mini">
+                        <span>🎣 welcome back, angler</span>
+                    </div>
+                    <form id="loginForm" novalidate>
+                        <div class="input-group">
+                            <label> Email address</label>
+                            <input type="email" class="input-field" id="loginEmail" placeholder="alpha@fisher.fi" autocomplete="email">
+                            <div id="loginEmailError" class="error-message"></div>
+                        </div>
+                        <div class="input-group">
+                            <label> Password</label>
+                            <input type="password" class="input-field" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+                            <div id="loginPasswordError" class="error-message"></div>
+                        </div>
+                        <button type="submit" class="action-btn">Sign in →</button>
+                        <div class="switch-helper">
+                            No hook yet?
+                            <button type="button" class="switch-link" id="switchToSignupBtn">Create new account</button>
+                        </div>
+                    </form>
+                    <div class="demo-note">
+                         Demo: Use any email + password (min 4 chars). Accounts stored in your browser.
+                    </div>
+                </div>
+
+                <!-- SIGNUP / CREATE ACCOUNT PANEL -->
+                <div id="signupPanel" class="auth-panel">
+                    <div class="logo-mini">
+                        <span> join the Suomu family</span>
+                    </div>
+                    <form id="signupForm" novalidate>
+                        <div class="input-group">
+                            <label> Full name</label>
+                            <input type="text" class="input-field" id="signupName" placeholder="Jari Juoppo" autocomplete="name">
+                            <div id="signupNameError" class="error-message"></div>
+                        </div>
+                        <div class="input-group">
+                            <label> Email address</label>
+                            <input type="email" class="input-field" id="signupEmail" placeholder="jänis@suomu.fi" autocomplete="email">
+                            <div id="signupEmailError" class="error-message"></div>
+                        </div>
+                        <div class="input-group">
+                            <label> Create password</label>
+                            <input type="password" class="input-field" id="signupPassword" placeholder="at least 4 characters" autocomplete="new-password">
+                            <div class="field-hint">️ Min. 4 characters</div>
+                            <div id="signupPasswordError" class="error-message"></div>
+                        </div>
+                        <div class="input-group">
+                            <label>✔ Confirm password</label>
+                            <input type="password" class="input-field" id="signupConfirm" placeholder="retype your password">
+                            <div id="signupConfirmError" class="error-message"></div>
+                        </div>
+                        <button type="submit" class="action-btn">Create account →</button>
+                        <div class="switch-helper">
+                            Already have an account?
+                            <button type="button" class="switch-link" id="switchToLoginBtn">Sign in here</button>
+                        </div>
+                    </form>
+                    <div class="demo-note">
+                        💡 After signup, your credentials are saved. Use same email + password to login.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="Ota yhteyttä meihin!">
+            <img src="kuvat/harrylovessuomu.png">
+            <h6><strong>Contact Us</strong></h6>
+            <ul>
+                <li>phone.0300 8907 789</li>
+                <li>&nbsp;Osoite: Metsäsuomitie 67, 04957 Mäntäänsuoli</li>
+                <li> Meilaa meille: suomu@pp.inet.fi</li>
+            </ul>
+            <figure></figure>
+        </section>
+    </main>
+</div>
+
+<script>
+    (function() {
+        // ---------- STORAGE for accounts (localStorage) ----------
+        const USERS_DB_KEY = 'suomu_users_db';
+
+        function getUsers() {
+            const raw = localStorage.getItem(USERS_DB_KEY);
+            if (!raw) return {};
+            try {
+                return JSON.parse(raw);
+            } catch(e) {
+                return {};
+            }
+        }
+
+        function saveUsers(usersObj) {
+            localStorage.setItem(USERS_DB_KEY, JSON.stringify(usersObj));
+        }
+
+        function registerUser(email, name, password) {
+            const users = getUsers();
+            const normalizedEmail = email.trim().toLowerCase();
+            if (users[normalizedEmail]) {
+                return { success: false, message: 'Sähköposti on jo rekisteröity. Kirjaudu sisään!' };
+            }
+            users[normalizedEmail] = {
+                name: name.trim() || "Suomu kalastaja",
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            saveUsers(users);
+            return { success: true, message: 'Tilisi on luotu! Kirjaudu sisään.' };
+        }
+
+        function validateLogin(email, password) {
+            const users = getUsers();
+            const normalizedEmail = email.trim().toLowerCase();
+            const userRecord = users[normalizedEmail];
+            if (!userRecord) {
+                return { valid: false, message: 'Ei löydy tiliä tällä sähköpostilla.' };
+            }
+            if (userRecord.password !== password) {
+                return { valid: false, message: 'Väärä salasana. Yritä uudelleen.' };
+            }
+            return { valid: true, message: 'Kirjautuminen onnistui', user: userRecord };
+        }
+
+        // ----- DOM elements -----
+        const loginTabBtn = document.getElementById('loginTabBtn');
+        const signupTabBtn = document.getElementById('signupTabBtn');
+        const loginPanel = document.getElementById('loginPanel');
+        const signupPanel = document.getElementById('signupPanel');
+        const switchToSignupBtn = document.getElementById('switchToSignupBtn');
+        const switchToLoginBtn = document.getElementById('switchToLoginBtn');
+
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginEmailError = document.getElementById('loginEmailError');
+        const loginPasswordError = document.getElementById('loginPasswordError');
+
+        const signupName = document.getElementById('signupName');
+        const signupEmail = document.getElementById('signupEmail');
+        const signupPassword = document.getElementById('signupPassword');
+        const signupConfirm = document.getElementById('signupConfirm');
+        const signupNameError = document.getElementById('signupNameError');
+        const signupEmailError = document.getElementById('signupEmailError');
+        const signupPasswordError = document.getElementById('signupPasswordError');
+        const signupConfirmError = document.getElementById('signupConfirmError');
+
+        function clearLoginErrors() {
+            loginEmailError.innerText = '';
+            loginPasswordError.innerText = '';
+            loginEmail.style.borderColor = '';
+            loginPassword.style.borderColor = '';
+        }
+
+        function clearSignupErrors() {
+            signupNameError.innerText = '';
+            signupEmailError.innerText = '';
+            signupPasswordError.innerText = '';
+            signupConfirmError.innerText = '';
+            signupName.style.borderColor = '';
+            signupEmail.style.borderColor = '';
+            signupPassword.style.borderColor = '';
+            signupConfirm.style.borderColor = '';
+        }
+
+        function showMessage(message, isError = true) {
+            const toast = document.createElement('div');
+            toast.innerText = message;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '24px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = isError ? '#b23c1c' : '#2f6b3c';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 24px';
+            toast.style.borderRadius = '40px';
+            toast.style.fontFamily = "'Papyrus', fantasy";
+            toast.style.fontWeight = 'bold';
+            toast.style.zIndex = '2000';
+            toast.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2800);
+        }
+
+        function setActiveTab(tab) {
+            if (tab === 'login') {
+                loginTabBtn.classList.add('active');
+                signupTabBtn.classList.remove('active');
+                loginPanel.classList.add('active-panel');
+                signupPanel.classList.remove('active-panel');
+                clearLoginErrors();
+                clearSignupErrors();
+            } else {
+                signupTabBtn.classList.add('active');
+                loginTabBtn.classList.remove('active');
+                signupPanel.classList.add('active-panel');
+                loginPanel.classList.remove('active-panel');
+                clearSignupErrors();
+                clearLoginErrors();
+            }
+        }
+
+        loginTabBtn.addEventListener('click', () => setActiveTab('login'));
+        signupTabBtn.addEventListener('click', () => setActiveTab('signup'));
+        switchToSignupBtn.addEventListener('click', () => setActiveTab('signup'));
+        switchToLoginBtn.addEventListener('click', () => setActiveTab('login'));
+
+        // LOGIN submit
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearLoginErrors();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            let hasError = false;
+
+            if (!email) {
+                loginEmailError.innerText = 'Sähköposti vaaditaan';
+                loginEmail.style.borderColor = '#c7423f';
+                hasError = true;
+            } else if (!email.includes('@') || !email.includes('.')) {
+                loginEmailError.innerText = 'Syötä kelvollinen sähköposti';
+                loginEmail.style.borderColor = '#c7423f';
+                hasError = true;
+            }
+            if (!password) {
+                loginPasswordError.innerText = 'Salasana vaaditaan';
+                loginPassword.style.borderColor = '#c7423f';
+                hasError = true;
+            } else if (password.length < 4) {
+                loginPasswordError.innerText = 'Salasanan oltava vähintään 4 merkkiä';
+                loginPassword.style.borderColor = '#c7423f';
+                hasError = true;
+            }
+            if (hasError) return;
+
+            const result = validateLogin(email, password);
+            if (result.valid) {
+                showMessage(`🎣 Tervetuloa takaisin, ${result.user.name}!`, false);
+                loginEmail.value = '';
+                loginPassword.value = '';
+            } else {
+                showMessage(result.message, true);
+                if (result.message.includes('sähköpostilla')) {
+                    loginEmailError.innerText = result.message;
+                    loginEmail.style.borderColor = '#c7423f';
+                } else {
+                    loginPasswordError.innerText = result.message;
+                    loginPassword.style.borderColor = '#c7423f';
+                }
+            }
+        });
+
+        // SIGNUP submit
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearSignupErrors();
+            let isValid = true;
+            const name = signupName.value.trim();
+            const email = signupEmail.value.trim();
+            const password = signupPassword.value;
+            const confirm = signupConfirm.value;
+
+            if (!name) {
+                signupNameError.innerText = 'Nimi vaaditaan';
+                signupName.style.borderColor = '#c7423f';
+                isValid = false;
+            } else if (name.length < 2) {
+                signupNameError.innerText = 'Nimen oltava vähintään 2 kirjainta';
+                signupName.style.borderColor = '#c7423f';
+                isValid = false;
+            }
+            const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            if (!email) {
+                signupEmailError.innerText = 'Sähköposti vaaditaan';
+                signupEmail.style.borderColor = '#c7423f';
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                signupEmailError.innerText = 'Kelvollinen sähköposti (esim. nimi@suomu.fi)';
+                signupEmail.style.borderColor = '#c7423f';
+                isValid = false;
+            }
+            if (!password) {
+                signupPasswordError.innerText = 'Salasana vaaditaan';
+                signupPassword.style.borderColor = '#c7423f';
+                isValid = false;
+            } else if (password.length < 4) {
+                signupPasswordError.innerText = 'Salasanan oltava vähintään 4 merkkiä';
+                signupPassword.style.borderColor = '#c7423f';
+                isValid = false;
+            }
+            if (!confirm) {
+                signupConfirmError.innerText = 'Vahvista salasana';
+                signupConfirm.style.borderColor = '#c7423f';
+                isValid = false;
+            } else if (password !== confirm) {
+                signupConfirmError.innerText = 'Salasanat eivät täsmää';
+                signupConfirm.style.borderColor = '#c7423f';
+                isValid = false;
+            }
+            if (!isValid) return;
+
+            const regResult = registerUser(email, name, password);
+            if (regResult.success) {
+                showMessage(regResult.message, false);
+                signupName.value = '';
+                signupEmail.value = '';
+                signupPassword.value = '';
+                signupConfirm.value = '';
+                setActiveTab('login');
+                loginEmail.value = email;
+                loginPassword.value = '';
+                showMessage(`✅ Tili luotu käyttäjälle ${email}. Kirjaudu sisään.`, false);
+            } else {
+                signupEmailError.innerText = regResult.message;
+                signupEmail.style.borderColor = '#c7423f';
+                showMessage(regResult.message, true);
+            }
+        });
+
+        const allInputs = [loginEmail, loginPassword, signupName, signupEmail, signupPassword, signupConfirm];
+        allInputs.forEach(input => {
+            if (input) {
+                input.addEventListener('focus', () => {
+                    input.style.borderColor = '';
+                    const errorDivId = input.id + 'Error';
+                    const errorDiv = document.getElementById(errorDivId);
+                    if (errorDiv) errorDiv.innerText = '';
+                });
+            }
+        });
+
+        // Seed demo account
+        function seedDemoAccount() {
+            const users = getUsers();
+            if (!users['demo@suomu.fi']) {
+                users['demo@suomu.fi'] = {
+                    name: 'Demo-Onkija',
+                    password: 'kala123',
+                    createdAt: new Date().toISOString()
+                };
+                saveUsers(users);
+            }
+        }
+        seedDemoAccount();
+    })();
+</script>
+</body>
+</html>
